@@ -1,0 +1,225 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* Overall Layout */
+.form-layout {
+  display: flex;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+/* Left Section */
+.image-section {
+  flex: 1.3;
+  background-image: url('../assets/bulb.jpeg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem;
+  color: white;
+  box-shadow: inset -5px 0 15px rgba(0, 0, 0, 0.4);
+}
+
+.brand-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3rem;
+  font-weight: 60;
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
+  position: relative;
+  left: 500px; /* Moves right */
+  top: -250px;  /* Moves down */
+}
+
+
+
+/* Right Section */
+.form-section {
+  flex: 1;
+  background-color: #606060; /* Dark grey */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.form-section h1 {
+  font-size: 4rem;
+  font-weight: 80;
+  margin-bottom: 1.5rem;
+  color: #030202;
+  text-align: center;
+  
+}
+
+.form-section h2 {
+  font-size: 2rem;
+  font-weight: 80;
+  margin-bottom: 1.5rem;
+  color: #030202;
+  text-align: center;
+  position: relative;
+  top: -60px;  /* Moves down */
+}
+
+.form-section p {
+  font-size: 1.3rem;
+  font-weight: 80;
+  margin-bottom: 1.5rem;
+  color: #000000;
+  text-align: center;
+
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+}
+
+form input {
+  padding: 0.9rem;
+  margin-bottom: 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #a5a2a2;
+  color: #161515;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+form input::placeholder {
+  color: #ffffff;
+  text-align: center;
+}
+
+form input:focus {
+  background-color: #5a5757;
+  border: 2px solid #ff5e57;
+}
+
+/* Form Buttons */
+.form-button {
+  padding: 0.9rem;
+  width: 100%;
+  background-color: #4e4b4b;
+  color: #ffd700; /* Gold */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-button:hover {
+  background-color: #ff5e57;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.forgot-link {
+  font-size: 1rem;
+  color: #0b0b0b;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  position: relative;
+  left: 100px; /* Moves right */
+  top: -20px;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+  color: #ff5e57;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: #bbb;
+}
+
+.divider span {
+  margin: 0 0.5rem;
+  font-size: 0.9rem;
+  color: #d1d1d1;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: #ccc;
+}
+
+/* Toggle Switch Styling */
+.toggle-switch {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.switch-circle {
+  width: 15px;
+  height: 15px;
+  background-color: #ddd;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.switch-circle:hover {
+  background-color: #aaa;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .form-layout {
+    flex-direction: column;
+  }
+
+  .image-section,
+  .form-section {
+    flex: none;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  .image-section {
+    height: 40vh;
+    justify-content: flex-end;
+    padding: 1.5rem;
+  }
+
+  .form-section {
+    padding: 2rem;
+  }
+
+  .form-section h1 {
+    font-size: 2rem;
+  }
+
+  form input {
+    font-size: 0.9rem;
+  }
+
+  .form-button {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+}

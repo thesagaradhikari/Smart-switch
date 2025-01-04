@@ -1,0 +1,143 @@
+.form-layout {
+  display: flex;
+  height: 100vh;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Left Section */
+.image-section {
+  flex: 1;
+  background-image: url('../assets/bulb.jpeg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  color: white;
+  
+}
+
+.brand-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.brand-subtitle {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+/* For the right section */
+.form-section {
+flex: 1;
+background-color: #606060; /* Light grey */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 20px;
+box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */
+}
+
+
+.form-section h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.form-section p {
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+/* Form Styling */
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+}
+
+form input {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-button {
+  padding: 0.75rem;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.form-button:hover {
+  background-color: #555;
+}
+
+.forgot-link {
+  font-size: 0.9rem;
+  color: #888;
+  text-decoration: none;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: #aaa;
+}
+
+.divider span {
+  margin: 0 0.5rem;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: #ccc;
+}
+
+/* Toggle Switch Styling */
+.toggle-switch {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.switch-circle {
+  width: 12px;
+  height: 12px;
+  background-color: #ddd;
+  border-radius: 50%;
+}
+
+.switch-circle:hover {
+  background-color: #aaa;
+}
