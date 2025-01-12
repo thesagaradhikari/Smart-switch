@@ -1,29 +1,61 @@
-// src/App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import Dashboard from './components/Dashboard';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // Check authentication from localStorage (or sessionStorage) on app load
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => localStorage.getItem('authToken') !== null
+  );
 
-  // Dummy login function for example
+  // Handle login (set authentication state and token)
   const handleLogin = () => {
-    setIsAuthenticated(true); // Assume login is successful
-    return <Dashboard />;
+    setIsAuthenticated(true);
+    localStorage.setItem('authToken', 'your-token'); // Simulate storing an auth token
   };
+
+  // Handle logout (clear authentication state and token)
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('authToken');
+  };
+
+  useEffect(() => {
+    // Ensure `isAuthenticated` state stays in sync with localStorage
+    setIsAuthenticated(localStorage.getItem('authToken') !== null);
+  }, []);
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage onLogin={handleLogin} />} />
-        <Route path="/register" element={<RegisterPage />} />
+        {/* Login Page */}
         <Route
-          path="/dashboard"
-          element={isAuthenticated ? <Dashboard /> : <Navigate to="/Login" />}
+          path="/"
+          element={<LoginPage onLogin={handleLogin} />}
         />
         
+        {/* Registration Page */}
+        <Route
+          path="/register"
+          element={<RegisterPage />}
+        />
+
+        {/* Protected Dashboard */}
+        <Route
+          path="/dashboard"
+          element={
+            isAuthenticated ? (
+              <Dashboard onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+
+        {/* Catch-all route to redirect to login */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
