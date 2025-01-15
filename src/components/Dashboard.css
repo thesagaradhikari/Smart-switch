@@ -24,6 +24,7 @@ body {
   min-height: 100vh;
 }
 
+/* Dashboard container */
 .dashboard-container {
   display: flex;
   flex-direction: column;
@@ -40,248 +41,23 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-/* Top Navigation Bar */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2.5rem;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-}
-
-.navbar h1 {
-  margin: 0;
-  font-size: 2.2rem;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.navbar nav {
-  display: flex;
-  gap: 2rem;
-}
-
-.navbar a {
+/* Greeting Section */
+.greeting-message {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 1.6rem;
   color: var(--text-color);
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: 500;
-  position: relative;
-  padding: 0.5rem 1rem;
-  transition: var(--transition);
 }
 
-.navbar a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--primary-color);
-  transition: var(--transition);
-}
-
-.navbar a:hover::after {
-  width: 100%;
-}
-
-/* Main Dashboard Content */
-.dashboard-main {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
-  margin-top: 2rem;
-  animation: fadeIn 0.8s ease-in-out;
-}
-
-.glass-panel {
-  padding: 2.5rem;
-  border-radius: 24px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  transition: var(--transition);
-}
-
-.glass-panel:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Widgets */
-.widget {
-  margin-bottom: 2.5rem;
-  padding: 1.5rem;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
-  border: 1px solid var(--glass-border);
-  transition: var(--transition);
-}
-
-.widget:hover {
-  transform: scale(1.02);
-}
-
-.widget h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+.greeting-message h2 {
+  font-size: 3.5rem; /* Increased size for time */
+  margin-bottom: 1rem;
   color: var(--primary-color);
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.device-button {
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
+.greeting-message p {
+  font-size: 1.5rem; /* Increased size for date */
+  margin: 0.5rem 0;
   font-weight: 500;
-  color: var(--text-color);
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.device-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Thermostat */
-.thermostat-circle {
-  width: 150px;
-  height: 150px;
-  border: 15px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  margin: 2rem auto;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-  transition: var(--transition);
-}
-
-.thermostat-circle:hover {
-  animation: pulse 1.5s infinite;
-}
-
-.thermostat-control {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-}
-
-.thermostat-control button {
-  width: 50px;
-  height: 50px;
-  font-size: 1.5rem;
-  color: var(--text-color);
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.thermostat-control button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Profile Section */
-.profile-section {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.profile-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 3px solid var(--primary-color);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: var(--transition);
-}
-
-.profile-avatar:hover {
-  transform: scale(1.1);
-}
-
-.profile-name {
-  font-size: 1.1rem;
-  font-weight: 600;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.logout-button {
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-color);
-  background: linear-gradient(45deg, var(--accent-color), var(--secondary-color));
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: var(--transition);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.logout-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .dashboard-container {
-    padding: 1rem;
-  }
-
-  .navbar {
-    flex-direction: column;
-    padding: 1.5rem;
-    gap: 1rem;
-  }
-
-  .navbar nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-  }
-
-  .profile-section {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .glass-panel {
-    padding: 1.5rem;
-  }
-
-  .thermostat-circle {
-    width: 120px;
-    height: 120px;
-    font-size: 2rem;
-  }
 }
