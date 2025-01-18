@@ -1,63 +1,252 @@
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-/* Custom Properties */
-:root {
-  --primary-color: #00bcd4;
-  --secondary-color: #7c4dff;
-  --accent-color: #ff4081;
-  --text-color: #ffffff;
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Base styles */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-              url('../assets/bulb.jpeg') no-repeat center center fixed;
-  background-size: cover;
-  min-height: 100vh;
-}
-
-/* Dashboard container */
+/* Main Container */
 .dashboard-container {
   display: flex;
-  flex-direction: column;
   min-height: 100vh;
-  padding: 2rem;
-  backdrop-filter: blur(15px);
-  color: var(--text-color);
-  animation: fadeIn 0.5s ease-in-out;
+  background: url('../assets/bulb.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Navbar */
+.navbar {
+  width: 220px;
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+
+  position: sticky;
+  top: 0;
+  box-shadow: 2px 0px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Greeting Section */
-.greeting-message {
+.navbar__menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar__item {
+  margin-bottom: 20px;
+}
+
+.navbar__link {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.navbar__link:hover {
+  background-color: #444;
+}
+
+.navbar__link.active {
+  background-color: #666;
+}
+
+.navbar__link span {
+  margin-left: 10px;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+  flex: 1;
+  
+  
+  backdrop-filter: blur(10px);
+ 
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+/* Dashboard Home */
+.dashboard-home {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+}
+
+.left-column, .right-column {
+  flex: 1;
+  background-color: rgba(244, 231, 231, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ESP32 Control Section */
+.add-esp32-btn {
+  padding: 12px 24px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.add-esp32-btn:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+.add-esp32-btn:active {
+  transform: scale(0.95);
+}
+
+/* Switches */
+.switches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.switch {
+  flex: 1 1 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.switch-btn {
+  width: 80px;
+  height: 80px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  background-color: #f1f1f1;
+  color: #333;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.switch-btn.on {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.switch-btn.off {
+  background-color: #f44336;
+  color: white;
+}
+
+.switch-btn:hover {
+  transform: scale(1.1);
+}
+
+.switch-btn:active {
+  transform: scale(0.95);
+}
+
+/* Profile Page */
+.content-section {
+  width: auto;
+  height: auto;
+  margin: 50px;
+  padding: 45px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+/* Maintain the glossy gradient overlay */
+.content-section::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* Keep other styles the same */
+.content-section h2 {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 20px;
   text-align: center;
-  margin-top: 3rem;
-  font-size: 1.6rem;
-  color: var(--text-color);
+  position: relative;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.greeting-message h2 {
-  font-size: 3.5rem; /* Increased size for time */
-  margin-bottom: 1rem;
-  color: var(--primary-color);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+.content-section p {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
 }
 
-.greeting-message p {
-  font-size: 1.5rem; /* Increased size for date */
-  margin: 0.5rem 0;
-  font-weight: 500;
+.profile-info p {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+}
+
+.profile-info .email {
+  color: #7cb9ff;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(124, 185, 255, 0.3);
+}
+
+.content-section button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background: rgba(0, 123, 255, 0.8);
+  backdrop-filter: blur(5px);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.content-section button:hover {
+  background: rgba(0, 123, 255, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 
+    0 4px 12px rgba(0, 123, 255, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.content-section button:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 2px 6px rgba(0, 123, 255, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
 }

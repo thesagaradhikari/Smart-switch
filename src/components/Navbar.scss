@@ -1,0 +1,54 @@
+/* Keyframe animations for gooey effects */
+@keyframes gooeyEffect1 {
+  0% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1.1, 1.1);
+  }
+}
+
+@keyframes gooeyEffect2 {
+  0% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1.2, 1.2);
+  }
+}
+
+@keyframes gooeyEffect3 {
+  0% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(1.3, 1.3);
+  }
+}
+
+/* Apply the gooey effect animations */
+.gooeyEffect1 {
+  animation: gooeyEffect1 1s infinite;
+}
+
+.gooeyEffect2 {
+  animation: gooeyEffect2 1s infinite;
+}
+
+.gooeyEffect3 {
+  animation: gooeyEffect3 1s infinite;
+}
+
+/* Navbar icon styles */
+.navbar__link i {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  color: white; /* Change icon color */
+}
+
+/* Adjust icon size on hover */
+.navbar__link:hover i {
+  width: 22px;
+  height: 22px;
+}
