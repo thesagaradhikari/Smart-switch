@@ -89,12 +89,28 @@ const DeviceCard = React.memo(({ device, isLoading, onSwitchToggle, onEditSwitch
   </div>
 ));
 
-const NewWindow = ({ device }) => (
+const NewWindow = ({ device, onSwitchToggle }) => (
   <div className="new-window">
     <h3>{device.name}</h3>
     <p>Status: {device.isOnline ? 'Online' : 'Offline'}</p>
     <p>Last Updated: {new Date(device.lastUpdated).toLocaleString()}</p>
     <p>Last Status Check: {new Date(device.lastStatusCheck).toLocaleString()}</p>
+    <h4>Switches:</h4>
+    <div className="switches">
+      {device.switches.map((state, index) => (
+        <div key={index} className="switch">
+          <button
+            className={`switch-btn ${state ? "on" : "off"}`}
+            onClick={() => onSwitchToggle(device.id, index)}
+            disabled={!device.isOnline}
+            aria-label={`Toggle switch ${index + 1} for ${device.name}`}
+          >
+            {device.switchLabels[index]} {/* Display the switch label */}
+          </button>
+          <span className="switch-label">{state ? 'ON' : 'OFF'}</span>
+        </div>
+      ))}
+    </div>
   </div>
 );
 
@@ -118,7 +134,7 @@ const DashboardHome = () => {
 
     const interval = setInterval(checkDeviceStatus, 30000); // Check every 30 seconds
     return () => clearInterval(interval);
-  }, []);
+  }, [setEsp32Devices]);
 
   const handleAddESP32 = () => {
     if (!newDeviceName.trim()) {
@@ -243,7 +259,7 @@ const DashboardHome = () => {
           </div>
           {/* New Window Section */}
           {selectedDevice && (
-            <NewWindow device={selectedDevice} />
+            <NewWindow device={selectedDevice} onSwitchToggle={handleSwitchToggle} />
           )}
         </div>
       </div>
@@ -353,8 +369,6 @@ const Profile = ({ onLogout }) => {
     avatar: null,
     role: 'admin'
   });
-  const [feedbackMessage, setFeedbackMessage] = useState(''); // State for feedback messages
-  const [selectedFile, setSelectedFile] = useState(null); // State for selected file
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to logout?')) {
@@ -370,7 +384,7 @@ const Profile = ({ onLogout }) => {
       ...prev,
       [field]: value
     }));
-    setFeedbackMessage('Profile updated successfully'); // Set feedback message
+    toast.success('Profile updated successfully'); // Set feedback message
   };
 
   const handleAvatarUpload = (file) => {
@@ -387,7 +401,6 @@ const Profile = ({ onLogout }) => {
   };
 
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
     handleAvatarUpload(e.target.files[0]);
   };
 
@@ -442,7 +455,7 @@ const Profile = ({ onLogout }) => {
 
 function Dashboard({ onLogout }) {
   const [navCollapsed, setNavCollapsed] = useState(false);
-  const [preferences, setPreferences] = useLocalStorage(STORAGE_KEYS.USER_PREFERENCES, {
+  const [preferences] = useLocalStorage(STORAGE_KEYS.USER_PREFERENCES, {
     theme: 'light',
     notifications: true
   });
