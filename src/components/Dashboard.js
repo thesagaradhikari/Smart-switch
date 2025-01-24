@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import Navbar from "./Navbar";
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import "./Dashboard.css";
 import 'react-toastify/dist/ReactToastify.css'; // Ensure this is at the top
 
@@ -39,7 +39,7 @@ const useLocalStorage = (key, initialValue) => {
   return [storedValue, setValue];
 };
 
-const DeviceCard = React.memo(({ device, isLoading, onSwitchToggle, onEditSwitchLabel, onDeleteDevice }) => (
+const DeviceCard = ({ device, isLoading, onSwitchToggle, onEditSwitchLabel, onDeleteDevice }) => (
   <div className="esp32-device">
     <div className="device-header">
       <h3>{device.name}</h3>
@@ -87,30 +87,15 @@ const DeviceCard = React.memo(({ device, isLoading, onSwitchToggle, onEditSwitch
       </button>
     </div>
   </div>
-));
+);
 
-const NewWindow = ({ device, onSwitchToggle }) => (
+const NewWindow = ({ devices = [], onSwitchToggle, setSelectedDevice }) => (
   <div className="new-window">
-    <h3>{device.name}</h3>
-    <p>Status: {device.isOnline ? 'Online' : 'Offline'}</p>
-    <p>Last Updated: {new Date(device.lastUpdated).toLocaleString()}</p>
-    <p>Last Status Check: {new Date(device.lastStatusCheck).toLocaleString()}</p>
-    <h4>Switches:</h4>
-    <div className="switches">
-      {device.switches.map((state, index) => (
-        <div key={index} className="switch">
-          <button
-            className={`switch-btn ${state ? "on" : "off"}`}
-            onClick={() => onSwitchToggle(device.id, index)}
-            disabled={!device.isOnline}
-            aria-label={`Toggle switch ${index + 1} for ${device.name}`}
-          >
-            {device.switchLabels[index]} {/* Display the switch label */}
-          </button>
-          <span className="switch-label">{state ? 'ON' : 'OFF'}</span>
-        </div>
-      ))}
-    </div>
+    {devices.map(device => (
+      <button key={device.id} onClick={() => setSelectedDevice(device)}>
+        {device.name}
+      </button>
+    ))}
   </div>
 );
 
@@ -130,6 +115,7 @@ const DashboardHome = () => {
           lastStatusCheck: new Date().toISOString()
         }))
       );
+      toast.info('Device status updated'); // Notify user of status update
     };
 
     const interval = setInterval(checkDeviceStatus, 30000); // Check every 30 seconds
@@ -143,46 +129,38 @@ const DashboardHome = () => {
     }
 
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      const newDevice = {
-        name: newDeviceName.trim(),
-        id: Date.now(),
-        switches: Array(6).fill(false),
-        isOnline: true,
-        lastUpdated: new Date().toISOString(),
-        lastStatusCheck: new Date().toISOString(),
-        switchLabels: Array(6).fill('').map((_, i) => `Switch ${i + 1}`)
-      };
+    const newDevice = {
+      name: newDeviceName.trim(),
+      id: Date.now(),
+      switches: Array(6).fill(false),
+      isOnline: true,
+      lastUpdated: new Date().toISOString(),
+      lastStatusCheck: new Date().toISOString(),
+      switchLabels: Array(6).fill('').map((_, i) => `Switch ${i + 1}`)
+    };
 
-      setEsp32Devices(prev => [...prev, newDevice]);
-      setNewDeviceName("");
-      setIsLoading(false);
-      toast.success(`Device "${newDeviceName}" added successfully`);
-      setSelectedDevice(newDevice); // Set the newly added device as selected
-    }, 1000);
+    setEsp32Devices(prev => [...prev, newDevice]);
+    setNewDeviceName("");
+    setIsLoading(false);
+    toast.success(`Device "${newDeviceName}" added successfully`);
+    setSelectedDevice(newDevice); // Set the newly added device as selected
   };
 
-  const handleSwitchToggle = (deviceId, switchIndex) => {
-    setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setEsp32Devices(currentDevices =>
-        currentDevices.map(device =>
-          device.id === deviceId
-            ? {
-                ...device,
-                switches: device.switches.map((state, index) =>
-                  index === switchIndex ? !state : state
-                ),
-              }
-            : device
-        )
-      );
-      setIsLoading(false);
-      toast.success(`Switch ${switchIndex + 1} toggled successfully`);
-    }, 1000);
-  };
+  const handleSwitchToggle = async (deviceId, switchIndex) => {
+    setEsp32Devices((currentDevices) => {
+      const updatedDevices = currentDevices.map((device) => {
+        if (device.id === deviceId) {
+          const updatedSwitches = [...device.switches];
+          updatedSwitches[switchIndex] = !updatedSwitches[switchIndex]; // Toggle the switch
+          return { ...device, switches: updatedSwitches };
+        }
+        return device;
+      });
+      return updatedDevices;
+    });
+  toast.success(`Switch ${switchIndex + 1} toggled successfully`);
+};
+
 
   const handleEditSwitchLabel = (deviceId, switchIndex, newLabel) => {
     setEsp32Devices(currentDevices =>
@@ -219,25 +197,17 @@ const DashboardHome = () => {
       <h2>Smart Home Dashboard</h2>
       <div className="dashboard-home">
         <div className="left-column">
-          {/* Device List */}
-          <div className="esp32-device-list">
-            {esp32Devices.length === 0 ? (
-              <div className="no-devices">
-                <p>No devices added yet. Add your first ESP32 device on the right!</p>
-              </div>
-            ) : (
-              esp32Devices.map((device) => (
-                <DeviceCard
-                  key={device.id}
-                  device={device}
-                  isLoading={isLoading}
-                  onSwitchToggle={handleSwitchToggle}
-                  onEditSwitchLabel={handleEditSwitchLabel}
-                  onDeleteDevice={handleDeleteDevice}
-                />
-              ))
-            )}
-          </div>
+          {/* Display Switches for Selected Device */}
+          {selectedDevice && (
+            <DeviceCard
+              key={selectedDevice.id}
+              device={selectedDevice}
+              isLoading={isLoading}
+              onSwitchToggle={handleSwitchToggle}
+              onEditSwitchLabel={handleEditSwitchLabel}
+              onDeleteDevice={handleDeleteDevice}
+            />
+          )}
         </div>
         <div className="right-column">
           {/* Add Device Section */}
@@ -258,8 +228,8 @@ const DashboardHome = () => {
             </button>
           </div>
           {/* New Window Section */}
-          {selectedDevice && (
-            <NewWindow device={selectedDevice} onSwitchToggle={handleSwitchToggle} />
+          {esp32Devices.length > 0 && (
+            <NewWindow devices={esp32Devices} onSwitchToggle={handleSwitchToggle} setSelectedDevice={setSelectedDevice} />
           )}
         </div>
       </div>
@@ -473,7 +443,7 @@ function Dashboard({ onLogout }) {
       />
       <div className="dashboard-content">
         <Routes>
-          <Route path="/" element={<DashboardHome />} />
+          <Route path="/" element={<DashboardHome />} /> {/* Home route to display switches */}
           <Route path="/settings" element={<Settings />} />
           <Route path="/profile" element={<Profile onLogout={onLogout} />} />
           <Route path="*" element={

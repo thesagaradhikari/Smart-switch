@@ -5,7 +5,6 @@ import RegisterPage from './components/RegisterPage';
 import Dashboard from './components/Dashboard';
 import { ToastContainer } from 'react-toastify';
 
-
 function App() {
   // Check authentication from localStorage (or sessionStorage) on app load
   const [isAuthenticated, setIsAuthenticated] = useState(() => localStorage.getItem('authToken') !== null);
@@ -49,11 +48,10 @@ function App() {
           }
         />
 
-      
-
         {/* Catch-all route to redirect to login */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <ToastContainer />
     </Router>
   );
 }
